@@ -1,42 +1,538 @@
+/* =====================================================
+   BOOKSTORE — Component Styles (App.css)
+   ===================================================== */
+
+/* ── App Shell ── */
 #root {
-  max-width: 1280px;
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  text-align: left;
+}
+
+.app-container {
+  min-height: 100vh;
+}
+
+/* ── NavBar ── */
+.navbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.2rem;
+  padding: 0.65rem 1.5rem;
+  min-height: 64px;
+  background: rgba(22, 27, 34, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin: 0 -1.5rem 2.5rem;
+  box-shadow: 0 1px 0 var(--accent-glow), 0 4px 20px rgba(0,0,0,0.4);
+}
+
+/* Brand slug — first link acts as logo */
+.navbar a:first-child {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  margin-right: 0.75rem;
+  padding: 0.4em 0.7em;
+}
+
+.navbar a {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.4em 0.75em;
+  border-radius: var(--radius-sm);
+  transition: color 0.18s, background-color 0.18s;
+  white-space: nowrap;
+}
+.navbar a:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+}
+
+/* Logout link pushed to the right */
+.navbar a[href='/logout'],
+.navbar a:last-child {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  padding: 0.3em 0.8em;
+  border: 1px solid rgba(248, 81, 73, 0.3);
+  border-radius: 99px;
+  color: var(--accent-red) !important;
+  white-space: nowrap;
+}
+.navbar a[href='/logout']:hover,
+.navbar a:last-child:hover {
+  background-color: rgba(248, 81, 73, 0.12);
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+/* ── Section Headings ── */
+.book-list > h1,
+.magazine-list > h1,
+div > h1 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  /* subtle accent underline */
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 40%);
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  background-position: 0 100%;
+}
+
+/* ── Item Cards (book-row) ── */
+.book-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.6rem;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  animation: fadeInUp 0.3s ease both;
+}
+
+.book-row:hover {
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.book-row.editing {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.book-row.editing input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.book-info h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  color: var(--text-primary);
+}
+
+.book-info p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.book-info p strong {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 2px;
+}
+
+/* ── Action Buttons inside rows ── */
+.book-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.book-actions button {
+  font-size: 0.8rem;
+  padding: 0.4em 0.9em;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+/* Add to Cart */
+.book-actions button[style*="#28a745"],
+.book-actions button[style*="28a745"] {
+  background-color: rgba(0, 212, 160, 0.12) !important;
+  color: var(--accent) !important;
+  border-color: rgba(0, 212, 160, 0.3) !important;
+}
+.book-actions button[style*="#28a745"]:hover,
+.book-actions button[style*="28a745"]:hover {
+  background-color: var(--accent) !important;
+  color: #000 !important;
+  border-color: var(--accent) !important;
+}
+
+/* Edit */
+.book-actions button[style*="#ffc107"],
+.book-actions button[style*="ffc107"] {
+  background-color: rgba(210, 153, 34, 0.12) !important;
+  color: var(--accent-yellow) !important;
+  border-color: rgba(210, 153, 34, 0.3) !important;
+}
+.book-actions button[style*="#ffc107"]:hover,
+.book-actions button[style*="ffc107"]:hover {
+  background-color: var(--accent-yellow) !important;
+  color: #000 !important;
+}
+
+/* Delete */
+.book-actions button[style*="#ff4444"],
+.book-actions button[style*="ff4444"] {
+  background-color: rgba(248, 81, 73, 0.1) !important;
+  color: var(--accent-red) !important;
+  border-color: rgba(248, 81, 73, 0.3) !important;
+}
+.book-actions button[style*="#ff4444"]:hover,
+.book-actions button[style*="ff4444"]:hover {
+  background-color: var(--accent-red) !important;
+  color: #fff !important;
+}
+
+/* Save button (inline edit) */
+.btn-save {
+  background-color: rgba(0, 212, 160, 0.15) !important;
+  color: var(--accent) !important;
+  border-color: rgba(0, 212, 160, 0.4) !important;
+}
+.btn-save:hover {
+  background-color: var(--accent) !important;
+  color: #000 !important;
+}
+
+/* ── Add-item Forms ── */
+.form-container,
+.form-style {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   padding: 2rem;
+  max-width: 480px;
+  margin: 2rem auto;
+  box-shadow: var(--shadow-lg);
+}
+
+/* override inline border colors */
+.form-container[style],
+.form-style[style] {
+  border: 1px solid var(--border) !important;
+}
+
+.form-container h3,
+.form-style h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.form-container input,
+.form-style input,
+.form-container label,
+.form-style label {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.form-container button[type="submit"],
+.form-style button[type="submit"] {
+  width: 100%;
+  padding: 0.75em;
+  margin-top: 0.5rem;
+  background-color: var(--accent) !important;
+  color: #000 !important;
+  border: none !important;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+.form-container button[type="submit"]:hover,
+.form-style button[type="submit"]:hover {
+  background-color: #00f0b8 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 212, 160, 0.35);
+}
+
+/* ── Cart Table ── */
+.app-container > div > h1 {
+  margin-bottom: 1.5rem;
+}
+
+/* ── Home page ── */
+div[style*="textAlign: 'center'"] h1,
+div[style*="text-align: center"] h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+/* ── Login Page ── */
+div[style*="marginTop: '50px'"],
+div[style*="margin-top: 50px"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+}
+
+div[style*="marginTop: '50px'"] h1 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0;
+  margin-bottom: 0.25rem;
+}
+
+div[style*="marginTop: '50px'"] h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+div[style*="marginTop: '50px'"] form {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.25rem;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: var(--shadow-lg);
+}
+
+div[style*="marginTop: '50px'"] label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  margin-top: 1rem;
+}
+
+div[style*="marginTop: '50px'"] input {
+  margin-bottom: 0 !important;
+}
+
+div[style*="marginTop: '50px'"] button[type="submit"] {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.75em;
+  background-color: var(--accent) !important;
+  color: #000 !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 0.95rem !important;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+div[style*="marginTop: '50px'"] button[type="submit"]:hover {
+  background-color: #00f0b8 !important;
+  box-shadow: 0 4px 16px rgba(0, 212, 160, 0.35);
+}
+
+/* ── Cart Action buttons ── */
+tbody button {
+  background: rgba(248, 81, 73, 0.1);
+  color: var(--accent-red);
+  border-color: rgba(248, 81, 73, 0.25);
+  font-size: 0.8rem;
+  padding: 0.3em 0.85em;
+}
+tbody button:hover {
+  background: var(--accent-red);
+  color: #fff;
+}
+
+/* ── Loading state ── */
+h2:only-child {
   text-align: center;
+  margin-top: 6rem;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  animation: pulse 1.6s ease-in-out infinite;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
+/* ── Animations ── */
+@keyframes fadeInUp {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1;   }
+}
+
+/* ── Stagger card animation delays ── */
+.book-row:nth-child(1)  { animation-delay: 0.04s; }
+.book-row:nth-child(2)  { animation-delay: 0.08s; }
+.book-row:nth-child(3)  { animation-delay: 0.12s; }
+.book-row:nth-child(4)  { animation-delay: 0.16s; }
+.book-row:nth-child(5)  { animation-delay: 0.20s; }
+.book-row:nth-child(6)  { animation-delay: 0.24s; }
+.book-row:nth-child(7)  { animation-delay: 0.28s; }
+.book-row:nth-child(8)  { animation-delay: 0.32s; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    padding: 0.5rem 1rem;
   }
+
+  .book-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .book-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .form-container,
+  .form-style {
+    padding: 1.25rem;
+  }
+
+  h1 { font-size: 1.6rem; }
 }
 
-.card {
-  padding: 2em;
+/* ── Search Bar ── */
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 40%);
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  background-position: 0 100%;
 }
 
-.read-the-docs {
-  color: #888;
+.list-header h1 {
+  /* override the generic div > h1 rule so the heading doesn't get its own border */
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+  background: none;
+  flex-shrink: 0;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.4em 0.75em;
+  width: 280px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.search-icon {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  min-width: 0;
+}
+
+.search-bar input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 0.1em 0.3em;
+  cursor: pointer;
+  border-radius: 3px;
+  line-height: 1;
+  transition: color 0.15s, background-color 0.15s;
+  flex-shrink: 0;
+}
+
+.search-clear:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-hover);
+  transform: none;
+  box-shadow: none;
+}
+
+.search-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 3rem 1rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .search-bar {
+    width: 100%;
+  }
 }

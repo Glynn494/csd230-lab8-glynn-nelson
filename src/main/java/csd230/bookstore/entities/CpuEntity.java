@@ -11,24 +11,14 @@ public class CpuEntity extends ComputerHardwareEntity {
 
     public CpuEntity() {}
 
-    public CpuEntity(int warrantyMonths, int cores) {
-        super(warrantyMonths);
+    public CpuEntity(String name, String manufacturer, int warrantyMonths, Double price, int cores) {
+        super(name, manufacturer, warrantyMonths, price);
         this.cores = cores;
     }
 
     public int  getCores()          { return cores; }
     public void setCores(int cores) { this.cores = cores; }
 
-    @Override
-    public String getProductType() { return "CPU"; }
-
-    @Override
-    public void sellItem() {
-
-    }
-
-    @Override
-    public Double getPrice() {
-        return 0.0;
-    }
+    @Override public String getProductType() { return "CPU"; }
+    @Override public void   sellItem()       {}
 }

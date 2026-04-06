@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Merge the NSAppTransportSecurity key into your existing Info.plist.
+  This allows plain HTTP connections to localhost and 10.0.2.2 during
+  development. For production, use HTTPS and remove this exception.
+-->
+<plist version="1.0">
+<dict>
+
+    <!-- App name shown on home screen -->
+    <key>CFBundleDisplayName</key>
+    <string>Bookstore</string>
+
+    <!-- Allow HTTP to local dev server only -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <false/>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <!-- iOS Simulator uses localhost / 127.0.0.1 -->
+            <key>localhost</key>
+            <dict>
+                <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+            <!-- Android emulator alias — handy if sharing config -->
+            <key>10.0.2.2</key>
+            <dict>
+                <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+            <!--
+              Add your LAN IP here for physical device testing, e.g.:
+              <key>192.168.1.42</key>
+              <dict>
+                  <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                  <true/>
+              </dict>
+            -->
+        </dict>
+    </dict>
+
+</dict>
+</plist>

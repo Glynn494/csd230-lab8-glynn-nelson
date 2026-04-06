@@ -18,27 +18,24 @@ public class CpuRestController {
     }
 
     @GetMapping
-    public List<CpuEntity> getAll() {
-        return cpuRepo.findAll();
-    }
+    public List<CpuEntity> getAll() { return cpuRepo.findAll(); }
 
     @GetMapping("/{id}")
     public ResponseEntity<CpuEntity> getById(@PathVariable Long id) {
-        return cpuRepo.findById(id)
-                .map(ResponseEntity::ok)
+        return cpuRepo.findById(id).map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public CpuEntity create(@RequestBody CpuEntity cpu) {
-        return cpuRepo.save(cpu);
-    }
+    public CpuEntity create(@RequestBody CpuEntity cpu) { return cpuRepo.save(cpu); }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CpuEntity> update(@PathVariable Long id,
-                                            @RequestBody CpuEntity updated) {
+    public ResponseEntity<CpuEntity> update(@PathVariable Long id, @RequestBody CpuEntity updated) {
         return cpuRepo.findById(id).map(existing -> {
+            existing.setName(updated.getName());
+            existing.setManufacturer(updated.getManufacturer());
             existing.setWarrantyMonths(updated.getWarrantyMonths());
+            existing.setPrice(updated.getPrice());
             existing.setCores(updated.getCores());
             return ResponseEntity.ok(cpuRepo.save(existing));
         }).orElse(ResponseEntity.notFound().build());

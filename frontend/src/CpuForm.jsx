@@ -1,20 +1,25 @@
 import { useState } from 'react';
 
 function CpuForm({ onCpuAdded, api }) {
-    const [warrantyMonths, setWarrantyMonths] = useState(36);
+    const [name,           setName]           = useState('');
+    const [manufacturer,   setManufacturer]   = useState('');
+    const [price,          setPrice]          = useState('');
     const [cores,          setCores]          = useState(8);
+    const [warrantyMonths, setWarrantyMonths] = useState(36);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const res = await api.post('/cpus', {
-                warrantyMonths: parseInt(warrantyMonths),
+                name,
+                manufacturer,
+                price:          parseFloat(price),
                 cores:          parseInt(cores),
+                warrantyMonths: parseInt(warrantyMonths),
             });
             alert('CPU saved!');
             onCpuAdded(res.data);
-            setWarrantyMonths(36);
-            setCores(8);
+            setName(''); setManufacturer(''); setPrice(''); setCores(8); setWarrantyMonths(36);
         } catch (err) {
             console.error(err);
             alert('Failed to save CPU.');
@@ -22,15 +27,15 @@ function CpuForm({ onCpuAdded, api }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="form-style"
-              style={{ border: '2px solid #0d6efd', padding: '20px' }}>
+        <form onSubmit={handleSubmit} className="form-style">
             <h3>🖥️ Add New CPU</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <input type="number" placeholder="Cores"             value={cores}          onChange={e => setCores(e.target.value)}          required />
-                <input type="number" placeholder="Warranty (months)" value={warrantyMonths} onChange={e => setWarrantyMonths(e.target.value)} required />
-                <button type="submit" style={{ backgroundColor: '#0d6efd', color: 'white', padding: '10px' }}>
-                    Save CPU to Database
-                </button>
+                <input type="text"   placeholder="Name (e.g. Core i9-14900K)"  value={name}           onChange={e => setName(e.target.value)}           required />
+                <input type="text"   placeholder="Manufacturer (e.g. Intel)"   value={manufacturer}   onChange={e => setManufacturer(e.target.value)}   required />
+                <input type="number" placeholder="Price"             step="0.01" value={price}          onChange={e => setPrice(e.target.value)}          required />
+                <input type="number" placeholder="Cores"                        value={cores}          onChange={e => setCores(e.target.value)}          required />
+                <input type="number" placeholder="Warranty (months)"            value={warrantyMonths} onChange={e => setWarrantyMonths(e.target.value)} required />
+                <button type="submit">Save CPU to Database</button>
             </div>
         </form>
     );

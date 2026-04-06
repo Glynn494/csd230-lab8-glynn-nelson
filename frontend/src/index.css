@@ -1,68 +1,170 @@
+/* =====================================================
+   BOOKSTORE — Global Styles
+   Aesthetic: Dark Tech / Editorial
+   Font: Syne (display) + DM Sans (body)
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ── Design Tokens ── */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --bg:           #0d1117;
+  --bg-surface:   #161b22;
+  --bg-card:      #1c2333;
+  --bg-hover:     #21293a;
+  --border:       #30363d;
+  --border-light: #3d4451;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #484f58;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --accent:         #00d4a0;   /* electric teal */
+  --accent-dim:     #00a87e;
+  --accent-glow:    rgba(0, 212, 160, 0.15);
+  --accent-blue:    #388bfd;
+  --accent-yellow:  #d29922;
+  --accent-red:     #f85149;
+  --accent-purple:  #a371f7;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  color-scheme: dark;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-a:hover {
-  color: #535bf2;
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg);
   min-height: 100vh;
+  display: block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* subtle grid texture */
+  background-image:
+          linear-gradient(rgba(0, 212, 160, 0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 212, 160, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* ── Typography ── */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+h1 { font-size: 1.6rem;  letter-spacing: 0; }
+h2 { font-size: 1.25rem; letter-spacing: 0; }
+h3 { font-size: 1.0rem;  letter-spacing: 0; }
+
+p  { color: var(--text-secondary); }
+
+strong { color: var(--text-primary); font-weight: 600; }
+
+small { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ── Links ── */
+a {
+  color: var(--accent);
+  text-decoration: none;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  transition: color 0.2s, opacity 0.2s;
+}
+a:hover { color: #fff; opacity: 1; }
+
+/* ── Buttons ── */
+button {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.5em 1.1em;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.18s, border-color 0.18s, transform 0.12s, box-shadow 0.18s;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: var(--bg-hover);
+  border-color: var(--border-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:active { transform: translateY(0); }
+
+/* ── Inputs ── */
+input, select, textarea {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.55em 0.85em;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+input::placeholder { color: var(--text-muted); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
 }
+thead th {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+tbody td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+  color: var(--text-secondary);
+}
+tbody tr:hover td { background: var(--bg-hover); color: var(--text-primary); }
+tbody tr:last-child td { border-bottom: none; }

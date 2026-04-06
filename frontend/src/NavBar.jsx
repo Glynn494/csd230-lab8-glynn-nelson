@@ -2,7 +2,6 @@ import { Link } from 'react-router';
 import { useAuth } from './provider/authProvider';
 
 function Navbar({ cartCount }) {
-    // isAdmin comes from the JWT decoded in authProvider — controls which links are visible
     const { isAdmin } = useAuth();
 
     return (
@@ -12,19 +11,22 @@ function Navbar({ cartCount }) {
             <Link to="/magazines">📰 Magazines</Link>
             <Link to="/cpus">🖥️ CPUs</Link>
             <Link to="/gpus">🎮 GPUs</Link>
+            <Link to="/ram">🧠 RAM</Link>
+            <Link to="/drives">💾 Drives</Link>
             <Link to="/cart">🛒 Cart ({cartCount})</Link>
 
-            {/* Add-new links are only shown to Admins */}
             {isAdmin && (
                 <>
-                    <Link to="/add">➕ Add Book</Link>
-                    <Link to="/add-magazine">➕ Add Magazine</Link>
-                    <Link to="/add-cpu">➕ Add CPU</Link>
-                    <Link to="/add-gpu">➕ Add GPU</Link>
+                    <Link to="/add">➕ Book</Link>
+                    <Link to="/add-magazine">➕ Mag</Link>
+                    <Link to="/add-cpu">➕ CPU</Link>
+                    <Link to="/add-gpu">➕ GPU</Link>
+                    <Link to="/add-ram">➕ RAM</Link>
+                    <Link to="/add-drive">➕ Drive</Link>
                 </>
             )}
 
-            <Link to="/logout" style={{ color: "#ff4444", marginLeft: "auto" }}>🚪 Logout</Link>
+            <Link to="/logout" style={{ color: '#ff4444', marginLeft: 'auto' }}>🚪 Logout</Link>
         </nav>
     );
 }

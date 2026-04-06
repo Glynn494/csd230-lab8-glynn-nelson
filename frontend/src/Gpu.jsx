@@ -1,17 +1,22 @@
 import { useState } from 'react';
 import { useAuth } from './provider/authProvider';
 
-function Gpu({ id, warrantyMonths, vramGB, onDelete, onUpdate, onAddToCart }) {
-    // isAdmin is decoded from the JWT payload by authProvider and exposed via context
+function Gpu({ id, name, manufacturer, warrantyMonths, price, vramGB, onDelete, onUpdate, onAddToCart }) {
     const { isAdmin } = useAuth();
     const [isEditing, setIsEditing] = useState(false);
 
+    const [tempName,     setTempName]     = useState(name);
+    const [tempMfr,      setTempMfr]      = useState(manufacturer);
+    const [tempPrice,    setTempPrice]    = useState(price);
     const [tempWarranty, setTempWarranty] = useState(warrantyMonths);
     const [tempVram,     setTempVram]     = useState(vramGB);
 
     const handleSave = () => {
         onUpdate(id, {
             id,
+            name:           tempName,
+            manufacturer:   tempMfr,
+            price:          parseFloat(tempPrice),
             warrantyMonths: parseInt(tempWarranty),
             vramGB:         parseInt(tempVram),
         });
@@ -21,6 +26,9 @@ function Gpu({ id, warrantyMonths, vramGB, onDelete, onUpdate, onAddToCart }) {
     if (isEditing) {
         return (
             <div className="book-row editing">
+                <input type="text"   placeholder="Name"              value={tempName}     onChange={e => setTempName(e.target.value)}     style={{ flex: 2 }} />
+                <input type="text"   placeholder="Manufacturer"      value={tempMfr}      onChange={e => setTempMfr(e.target.value)} />
+                <input type="number" placeholder="Price"    step="0.01" value={tempPrice}    onChange={e => setTempPrice(e.target.value)} />
                 <input type="number" placeholder="VRAM (GB)"         value={tempVram}     onChange={e => setTempVram(e.target.value)} />
                 <input type="number" placeholder="Warranty (months)" value={tempWarranty} onChange={e => setTempWarranty(e.target.value)} />
                 <div className="book-actions">
@@ -34,9 +42,10 @@ function Gpu({ id, warrantyMonths, vramGB, onDelete, onUpdate, onAddToCart }) {
     return (
         <div className="book-row">
             <div className="book-info">
-                <h3>🎮 GPU</h3>
+                <h3>🎮 {manufacturer} {name}</h3>
                 <p>
-                    <strong>VRAM:</strong> {vramGB}GB |&nbsp;
+                    <strong>Price:</strong> ${Number(price).toFixed(2)} &nbsp;|&nbsp;
+                    <strong>VRAM:</strong> {vramGB}GB &nbsp;|&nbsp;
                     <strong>Warranty:</strong> {warrantyMonths} months
                 </p>
             </div>
@@ -44,7 +53,6 @@ function Gpu({ id, warrantyMonths, vramGB, onDelete, onUpdate, onAddToCart }) {
                 <button onClick={() => onAddToCart(id)} style={{ backgroundColor: '#28a745', color: 'white' }}>
                     🛒 Add to Cart
                 </button>
-                {/* Edit and Delete are hidden from regular users — only Admins see these */}
                 {isAdmin && (
                     <>
                         <button onClick={() => setIsEditing(true)} style={{ backgroundColor: '#ffc107' }}>Edit</button>

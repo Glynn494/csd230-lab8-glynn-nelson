@@ -11,24 +11,14 @@ public class GpuEntity extends ComputerHardwareEntity {
 
     public GpuEntity() {}
 
-    public GpuEntity(int warrantyMonths, int vramGB) {
-        super(warrantyMonths);
+    public GpuEntity(String name, String manufacturer, int warrantyMonths, Double price, int vramGB) {
+        super(name, manufacturer, warrantyMonths, price);
         this.vramGB = vramGB;
     }
 
     public int  getVramGB()           { return vramGB; }
     public void setVramGB(int vramGB) { this.vramGB = vramGB; }
 
-    @Override
-    public String getProductType() { return "GPU"; }
-
-    @Override
-    public void sellItem() {
-
-    }
-
-    @Override
-    public Double getPrice() {
-        return 0.0;
-    }
+    @Override public String getProductType() { return "GPU"; }
+    @Override public void   sellItem()       {}
 }

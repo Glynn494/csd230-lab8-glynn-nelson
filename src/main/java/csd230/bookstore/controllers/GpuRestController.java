@@ -18,27 +18,24 @@ public class GpuRestController {
     }
 
     @GetMapping
-    public List<GpuEntity> getAll() {
-        return gpuRepo.findAll();
-    }
+    public List<GpuEntity> getAll() { return gpuRepo.findAll(); }
 
     @GetMapping("/{id}")
     public ResponseEntity<GpuEntity> getById(@PathVariable Long id) {
-        return gpuRepo.findById(id)
-                .map(ResponseEntity::ok)
+        return gpuRepo.findById(id).map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public GpuEntity create(@RequestBody GpuEntity gpu) {
-        return gpuRepo.save(gpu);
-    }
+    public GpuEntity create(@RequestBody GpuEntity gpu) { return gpuRepo.save(gpu); }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GpuEntity> update(@PathVariable Long id,
-                                            @RequestBody GpuEntity updated) {
+    public ResponseEntity<GpuEntity> update(@PathVariable Long id, @RequestBody GpuEntity updated) {
         return gpuRepo.findById(id).map(existing -> {
+            existing.setName(updated.getName());
+            existing.setManufacturer(updated.getManufacturer());
             existing.setWarrantyMonths(updated.getWarrantyMonths());
+            existing.setPrice(updated.getPrice());
             existing.setVramGB(updated.getVramGB());
             return ResponseEntity.ok(gpuRepo.save(existing));
         }).orElse(ResponseEntity.notFound().build());

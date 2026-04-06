@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Allows cleartext HTTP traffic to the local development server only.
+  10.0.2.2 is the Android emulator's alias for the host machine's localhost.
+  Add your LAN IP here too if testing on a physical device, e.g.:
+    <domain includeSubdomains="false">192.168.1.42</domain>
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.0.2.2</domain>
+        <!-- Uncomment and set your LAN IP for physical device testing: -->
+        <!-- <domain includeSubdomains="false">192.168.1.42</domain> -->
+    </domain-config>
+</network-security-config>
